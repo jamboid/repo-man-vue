@@ -1,6 +1,6 @@
 <template>
-  <section class="cp_ResultsList" v-show="results.length > 0">
-    <RepoCard v-for="result in results" :repoData="result" :key="result.id"></RepoCard>
+  <section class="cp_ResultsList">
+    <RepoCard v-for="result in results" :repoData="result" :key="result.index"></RepoCard>
   </section>
 </template>
 
@@ -12,12 +12,11 @@ export default {
   components: {
     RepoCard,
   },
-  props: {
-    results: {
-      type:Array,
-      required: true
+  computed: {
+    results () {
+      return this.$store.getters.getSearchResults;
     }
-  }
+  },
 }
 </script>
 

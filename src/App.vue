@@ -4,7 +4,7 @@
       <Logo></Logo>
       <SearchForm @submit-message="handleSubmit" helperText="Enter a username..."></SearchForm>
     </header>
-    <ResultsList :results=queryResults></ResultsList>
+    <ResultsList></ResultsList>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
         this.username = event;
         this.searchAPI();
       } else {
-        this.queryResults = [];
+        this.$store.commit('updateSearchResults', []);
       }
     },
 
@@ -43,14 +43,15 @@ export default {
       if(this.username !== '') {
         getJSON(buildGithubAPIQuery(this.username))
         .then(results => {
-          this.queryResults = results;
+          console.log(results);
+          this.$store.commit('updateSearchResults', results);
         })
         .catch((err) => {
           console.log(err);
         });
 
       } else {
-        this.queryResults = [];
+        this.$store.commit('updateSearchResults', []);
       }
     }
   }
